@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Ishika ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#2d2033;
+      --rose:#ff7aa2;
+      --rose-deep:#ff4f82;
+      --peach:#ffd2dc;
+      --cream:#fff4f7;
+      --card:#ffffffcc;
+      --shadow:0 22px 60px rgba(31,12,32,.28);
+    }
+    body{
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      color:var(--ink);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:100vh;
+      text-align:center;
+      overflow:hidden;
+      background:
+        radial-gradient(1200px 700px at 20% -10%, #ffe1ea 0%, transparent 55%),
+        radial-gradient(900px 600px at 100% 0%, #ffe7f0 0%, transparent 55%),
+        radial-gradient(900px 700px at 60% 120%, #ffe9f4 0%, transparent 60%),
+        linear-gradient(160deg, #fff6f9, #fbe9f2);
+    }
+    .card{
+      max-width:760px;
+      padding:46px 38px;
+      border-radius:30px;
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.7);
+      backdrop-filter:blur(10px);
+      box-shadow:var(--shadow);
+      animation:fadeUp .7s ease;
+      position:relative;
+      z-index:2;
+    }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+    h1{
+      font-family:'Playfair Display',serif;
+      font-size:3rem;
+      margin:0 0 10px;
+      color:#3b1f2f;
+      letter-spacing:.4px;
+    }
+    h2{margin:0 0 10px;color:#3b1f2f}
+    .subtitle{opacity:.82;margin:0 0 22px}
+    button{
+      margin:10px;
+      padding:14px 26px;
+      border:none;
+      border-radius:999px;
+      font-size:1rem;
+      cursor:pointer;
+      transition:transform .2s, box-shadow .2s, filter .2s;
+    }
+    button:hover{transform:translateY(-1px) scale(1.03)}
+    .yes{
+      background:linear-gradient(180deg,var(--rose),var(--rose-deep));
+      color:#fff;
+      box-shadow:0 10px 25px rgba(255,79,130,.35);
+    }
+    .ghost{
+      background:var(--cream);
+      color:#6b4a5b;
+      box-shadow:0 6px 18px rgba(107,74,91,.12);
+    }
+    .no{
+      background:var(--cream);
+      color:#6b4a5b;
+      position:relative;
+    }
+    input{
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.8);
+      background:#fff;
+      width:min(560px,86%);
+      box-shadow:0 10px 20px rgba(0,0,0,.06);
+    }
+    .hidden{display:none}
+    .fineprint{font-size:.9rem;opacity:.75;margin-top:14px;line-height:1.35}
+    #bar{transition:width .2s}
+
+    .heart{position:fixed;bottom:-20px;font-size:18px;opacity:.45;animation:float 10s linear infinite;z-index:4;color:#ff7aa2}
+    @keyframes float{to{transform:translateY(-110vh);opacity:0}}
+
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.08);font-size:.85rem;opacity:.95}
+    .answersWrap{max-height:52vh;overflow:auto;text-align:left;margin-top:18px;padding-right:6px}
+    .qa{padding:12px 14px;border-radius:16px;background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.06);margin:10px 0}
+    .qa b{display:block;margin-bottom:6px}
+
+    .gameWrap{display:flex;flex-direction:column;gap:16px;align-items:center}
+    .gameBoard{display:grid;gap:10px;grid-template-columns:repeat(4,minmax(64px,1fr));width:min(520px,90vw);max-height:60vh;overflow:auto;padding:4px}
+    .gameCard{
+      position:relative;
+      aspect-ratio:1/1;
+      border-radius:16px;
+      transform-style:preserve-3d;
+      transition:transform .35s ease;
+      cursor:pointer;
+      box-shadow:0 10px 22px rgba(0,0,0,.12);
+    }
+    .gameCard.flip{transform:rotateY(180deg)}
+    .gameFace{
+      position:absolute;inset:0;border-radius:16px;backface-visibility:hidden;overflow:hidden;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .gameFront{
+      background:linear-gradient(160deg,#fff,#ffe3ec);
+      border:1px solid rgba(255,255,255,.9);
+      color:#ff6f95;font-size:26px;
+    }
+    .gameBack{
+      transform:rotateY(180deg);
+      background:#fff;
+      border:1px solid rgba(255,255,255,.9);
+    }
+    .gameBack img{width:100%;height:100%;object-fit:cover}
+    .gameCard.matched{transform:rotateY(180deg);box-shadow:0 12px 26px rgba(255,79,130,.25)}
+    .gameMeta{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+    .gameBadge{padding:6px 10px;border-radius:999px;background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.08);font-size:.85rem}
+    @media (max-width:560px){
+      .card{padding:36px 24px}
+      .gameBoard{grid-template-columns:repeat(3,minmax(64px,1fr))}
+    }
+
+    .backArrow{
+      position:fixed;
+      top:18px;left:18px;
+      width:44px;height:44px;
+      border-radius:999px;
+      border:none;
+      background:#fff;
+      color:#6b4a5b;
+      box-shadow:0 10px 22px rgba(0,0,0,.12);
+      font-size:20px;
+      cursor:pointer;
+      z-index:6;
+      display:none;
+    }
+    .forwardArrow{
+      position:fixed;
+      top:18px;right:18px;
+      width:44px;height:44px;
+      border-radius:999px;
+      border:none;
+      background:#fff;
+      color:#6b4a5b;
+      box-shadow:0 10px 22px rgba(0,0,0,.12);
+      font-size:20px;
+      cursor:pointer;
+      z-index:6;
+      display:none;
+    }
+
+    .photo{position:fixed;width:140px;aspect-ratio:1/1;object-fit:cover;border-radius:18px;box-shadow:0 18px 50px rgba(0,0,0,.35);opacity:0;transform:translateY(12px) scale(.98);animation:photoInOut 6s ease forwards;border:1px solid rgba(255,255,255,.6);pointer-events:none;z-index:5}
+    @keyframes photoInOut{0%{opacity:0;transform:translateY(12px) scale(.98) rotate(-2deg)}15%{opacity:1;transform:translateY(0) scale(1) rotate(0deg)}85%{opacity:1;transform:translateY(-6px) scale(1.01) rotate(1deg)}100%{opacity:0;transform:translateY(-18px) scale(.98) rotate(2deg)}}
+
+    .float-photo{position:fixed;width:120px;aspect-ratio:1/1;object-fit:cover;border-radius:22px;opacity:.55;filter:blur(.2px) brightness(1.2) saturate(1.15);pointer-events:none;z-index:1;mix-blend-mode:screen;animation:drift 26s linear infinite}
+    @keyframes drift{from{transform:translate3d(var(--x0),110vh,0) rotate(var(--r0))}to{transform:translate3d(var(--x1),-160px,0) rotate(var(--r1))}}
+
+    #ending{max-width:820px}
+    .endingBg{position:absolute;inset:0;border-radius:28px;
+      background:radial-gradient(circle at 20% 10%, rgba(255,170,198,.32), transparent 55%),
+                 radial-gradient(circle at 80% 30%, rgba(255,122,162,.22), transparent 55%),
+                 radial-gradient(circle at bottom, rgba(255,222,236,.55), transparent 55%),
+                 radial-gradient(circle at top, #fff6f9, #fbe9f2 70%);
+      opacity:1;z-index:0}
+    .stars{position:absolute;inset:0;pointer-events:none;opacity:.35;z-index:0;border-radius:28px;overflow:hidden}
+    .star{position:absolute;width:2px;height:2px;background:rgba(255,255,255,.85);border-radius:999px;animation:twinkle 2.8s ease-in-out infinite}
+    @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+    .type{font-size:1.12rem;line-height:1.7;max-width:46ch;margin:10px auto 0;opacity:.92;white-space:pre-line}
+    .bigLove{font-size:3.2rem;margin:0 0 8px;position:relative;z-index:1}
+    .signature{opacity:.82;margin-top:18px;position:relative;z-index:1}
+
+    #secret{max-width:860px}
+    .secretBg{
+      position:fixed;inset:0;
+      background:radial-gradient(circle at 20% 10%, #4b0c2a 0%, #2a0318 45%, #18010f 70%, #12000a 100%);
+      z-index:0;
+    }
+    .secretCard{
+      position:relative;
+      z-index:2;
+      padding:50px 40px;
+      border-radius:28px;
+      background:rgba(54,9,30,.55);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 30px 80px rgba(0,0,0,.45);
+      color:#f6e8ee;
+    }
+    .secretTitle{font-family:'Playfair Display',serif;font-size:3rem;margin:0 0 8px}
+    .secretText{opacity:.9;line-height:1.7}
+    .secretHearts .heart{color:#ff7aa2;opacity:.35}
+    .secretPhoto{
+      position:fixed;
+      width:180px;
+      aspect-ratio:1/1;
+      object-fit:cover;
+      border-radius:18px;
+      box-shadow:0 18px 40px rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.2);
+      z-index:1;
+      transform:rotate(-6deg);
+      opacity:.9;
+    }
+    .secretPhoto.top{top:90px;right:90px}
+    .secretPhoto.bottom{bottom:40px;right:30px;transform:rotate(4deg)}
+    @media (max-width:760px){
+      .secretPhoto{width:120px}
+      .secretPhoto.top{top:20px;right:16px}
+      .secretPhoto.bottom{bottom:20px;right:10px}
+      .secretTitle{font-size:2.2rem}
+    }
+  </style>
+</head>
+<body>
+  <button class="backArrow" id="backArrow" aria-label="Back">←</button>
+  <button class="forwardArrow" id="forwardArrow" aria-label="Forward">→</button>
+
+  <div class="card" id="lock">
+    <h1>Hi Kuku ❤️</h1>
+    <p class="subtitle">A tiny surprise made only for you</p>
+    <input id="pw" type="password" placeholder="Enter secret password" />
+    <br/><br/>
+    <button class="yes" id="unlockBtn">Unlock 💌</button>
+    <p id="err" style="color:#ff6b6b;display:none;margin-top:10px">Wrong password</p>
+  </div>
+
+  <div class="card hidden" id="quiz">
+    <span class="pill" id="progress">Question 1 of 12</span>
+    <h2 id="q" style="margin:16px 0 8px"></h2>
+    <div id="a"></div>
+  </div>
+
+  <div class="card hidden" id="game">
+    <div class="gameWrap">
+      <h1>Match to Unlock</h1>
+      <p class="subtitle">Find all the pairs to open the quiz.</p>
+      <div class="gameMeta">
+        <span class="gameBadge" id="moves">Moves: 0</span>
+        <span class="gameBadge" id="pairs">Pairs: 0/0</span>
+      </div>
+      <div class="gameBoard" id="board"></div>
+      <p class="fineprint" id="gameMsg">Tip: take your time and remember the pictures.</p>
+    </div>
+  </div>
+
+  <div class="card hidden" id="main">
+    <h1>Ishika ❤️</h1>
+    <p class="subtitle">You make my quiet days feel magical and my loud days feel calm.</p>
+    <h2>Will you be my Valentine?</h2>
+    <button class="yes" id="yesBtn">YES 💕</button>
+    <button class="no" id="noBtn">No</button>
+  </div>
+
+  <div class="card hidden" id="loader">
+    <h2 style="margin:0 0 16px">Calculating how much I love you…</h2>
+    <div style="background:#222;border-radius:20px;overflow:hidden">
+      <div id="bar" style="height:20px;width:0;background:linear-gradient(45deg,#ff4d6d,#ff9ecb)"></div>
+    </div>
+    <p id="pct" style="margin:14px 0 0">0%</p>
+  </div>
+
+  <div class="card hidden" id="plan">
+    <h1>Date unlocked ❤️</h1>
+    <p style="margin:0">Let’s keep working hard so we can make babies and oppies time hihi 💕</p>
+    <br/>
+    <button class="yes" id="viewAnswersBtn">See what you wrote 💌</button>
+    <button class="ghost" id="sendAgainBtn">Send answers again</button>
+    <button class="yes" id="finalSceneBtn">Final surprise ✨</button>
+    <button class="ghost" id="secretBtn">Super secret 🔒</button>
+    <p id="mailStatus" class="fineprint" style="margin-top:14px"></p>
+    <p id="photoStatus" class="fineprint" style="margin-top:8px"></p>
+  </div>
+
+  <div class="card hidden" id="answersCard">
+    <h1>Your Answers ❤️</h1>
+    <p class="subtitle" style="margin-bottom:10px">(Saved on this device too.)</p>
+    <div class="answersWrap" id="answersList"></div>
+    <button class="ghost" id="backToPlanBtn">Back</button>
+  </div>
+
+  <div class="card hidden" id="ending">
+    <div class="endingBg"></div>
+    <div class="stars" id="stars"></div>
+    <div style="position:relative;z-index:1">
+      <h1 class="bigLove">I love you, Kuku</h1>
+      <div class="type" id="typeText"></div>
+      <div class="signature">— from your husband ❤️</div>
+      <br/>
+      <button class="yes" id="restartBtn">Replay 🔁</button>
+    </div>
+  </div>
+
+  <div class="card hidden" id="secret">
+    <div class="secretBg"></div>
+    <div class="secretCard">
+      <h1 class="secretTitle">Happy Birthday, my love</h1>
+      <p class="secretText">
+        Happy Birthday to the woman who stole my heart, my hoodie, and all the blankets 😌
+        <br/><br/>
+        Life with you is my favourite adventure, and I still can’t believe I get to call you my wife. Thank you for being my best friend, my partner in crime, and the love of my life. You make ordinary days feel special just by being you, and my life is brighter because of your smile and your love. Today we celebrate you — everything you are and everything you mean to me… and yes, you’re allowed to be spoiled extra today 🎂❤️
+        <br/><br/>
+        I’m so grateful for you, today and always. I love you more than words (and hoodies) can ever explain 💕
+      </p>
+      <br/>
+      <button class="yes" id="secretBackBtn">Back</button>
+    </div>
+    <img class="secretPhoto top" src="kuku1.jpg" alt="Us">
+    <img class="secretPhoto bottom" src="kuku2.jpg" alt="Us">
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  <script>
+    const PASSWORD = "Kukunatte";
+
+    const EMAILJS_PUBLIC_KEY = "8E5I04_FQVNeEoniH";
+    const EMAILJS_SERVICE_ID = "service_jau8rxc";
+    const EMAILJS_TEMPLATE_ID = "template_k0ruhsc";
+    const TO_EMAIL = "devilknight114@gmail.com";
+
+    const PHOTOS = [
+      "kuku1.jpg",
+      "kuku2.jpg",
+      "kuku3.jpg",
+      "kuku4.jpg",
+      "kuku5.jpg",
+      "kuku6.jpg",
+      "kuku7.jpg",
+      "kuku8.jpg",
+      "kuku9.jpg",
+      "kuku10.jpg"
+    ];
+
+    const quiz = [
+      "What is a romantic memory with me that you really cherish? ❤️",
+      "What’s a small, non-physical gesture I do that drives you wild? 😉",
+      "What’s your favorite way for us to spend time together alone? ✨",
+      "What is a fantasy you’ve kept to yourself and might want to try? 🔥",
+      "What’s the most attractive quality you see in me? 💫",
+      "What’s a playful way I can make you blush? 😌",
+      "Who fell first? 😌",
+      "Who apologizes first?",
+      "Who’s more obsessed?",
+      "Who thinks about you nonstop? 🔥",
+      "Who loves you more?",
+      "Final question… who loves you forever? ❤️"
+    ];
+
+    let qi = 0;
+    let answers = [];
+    let photosStarted = false;
+    let floatStarted = false;
+    let photoPool = [];
+    let emailInited = false;
+    let gameInited = false;
+
+    const lock = document.getElementById('lock');
+    const quizDiv = document.getElementById('quiz');
+    const game = document.getElementById('game');
+    const main = document.getElementById('main');
+    const loader = document.getElementById('loader');
+    const plan = document.getElementById('plan');
+    const answersCard = document.getElementById('answersCard');
+    const ending = document.getElementById('ending');
+    const secret = document.getElementById('secret');
+    const backArrow = document.getElementById('backArrow');
+    const forwardArrow = document.getElementById('forwardArrow');
+
+    const progress = document.getElementById('progress');
+    const qEl = document.getElementById('q');
+    const aEl = document.getElementById('a');
+    const pw = document.getElementById('pw');
+    const err = document.getElementById('err');
+    const bar = document.getElementById('bar');
+    const pct = document.getElementById('pct');
+
+    const unlockBtn = document.getElementById('unlockBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const viewAnswersBtn = document.getElementById('viewAnswersBtn');
+    const backToPlanBtn = document.getElementById('backToPlanBtn');
+    const sendAgainBtn = document.getElementById('sendAgainBtn');
+    const finalSceneBtn = document.getElementById('finalSceneBtn');
+    const restartBtn = document.getElementById('restartBtn');
+    const secretBtn = document.getElementById('secretBtn');
+    const secretBackBtn = document.getElementById('secretBackBtn');
+
+    const mailStatus = document.getElementById('mailStatus');
+    const photoStatus = document.getElementById('photoStatus');
+    const answersList = document.getElementById('answersList');
+
+    const typeText = document.getElementById('typeText');
+    const stars = document.getElementById('stars');
+    const board = document.getElementById('board');
+    const movesEl = document.getElementById('moves');
+    const pairsEl = document.getElementById('pairs');
+    const gameMsg = document.getElementById('gameMsg');
+
+    function show(el){ el.classList.remove('hidden'); }
+    function hide(el){ el.classList.add('hidden'); }
+
+    const screens = [lock, game, quizDiv, main, loader, plan, answersCard, ending, secret];
+    const navStack = [];
+    const forwardStack = [];
+    let currentScreen = lock;
+
+    function showScreen(el){
+      screens.forEach(hide);
+      show(el);
+      if(currentScreen && currentScreen !== el){
+        navStack.push(currentScreen);
+        forwardStack.length = 0;
+      }
+      currentScreen = el;
+      backArrow.style.display = el === lock ? 'none' : 'block';
+      forwardArrow.style.display = forwardStack.length ? 'block' : 'none';
+    }
+
+    function goBack(){
+      if(!navStack.length) return;
+      const prev = navStack.pop();
+      if(currentScreen) forwardStack.push(currentScreen);
+      screens.forEach(hide);
+      show(prev);
+      currentScreen = prev;
+      backArrow.style.display = prev === lock ? 'none' : 'block';
+      forwardArrow.style.display = forwardStack.length ? 'block' : 'none';
+    }
+
+    function goForward(){
+      if(!forwardStack.length) return;
+      const next = forwardStack.pop();
+      if(currentScreen) navStack.push(currentScreen);
+      screens.forEach(hide);
+      show(next);
+      currentScreen = next;
+      backArrow.style.display = next === lock ? 'none' : 'block';
+      forwardArrow.style.display = forwardStack.length ? 'block' : 'none';
+    }
+
+    function safeText(s){
+      return String(s ?? '').replace(/</g,'&lt;');
+    }
+
+    function render(){
+      progress.textContent = `Question ${qi + 1} of ${quiz.length}`;
+      qEl.textContent = quiz[qi];
+      aEl.innerHTML = '';
+
+      if(qi < 6){
+        const input = document.createElement('input');
+        input.placeholder = 'Type your answer here…';
+        input.autocomplete = 'off';
+
+        const btn = document.createElement('button');
+        btn.className = 'yes';
+        btn.textContent = 'Next ❤️';
+        btn.onclick = () => {
+          answers.push((input.value || '(no answer)').trim());
+          next();
+        };
+
+        aEl.appendChild(input);
+        aEl.appendChild(document.createElement('br'));
+        aEl.appendChild(btn);
+      } else {
+        ['Me','Also me','Obviously me'].forEach(t => {
+          const b = document.createElement('button');
+          b.textContent = t;
+          b.onclick = () => {
+            answers.push(t);
+            next();
+          };
+          aEl.appendChild(b);
+        });
+      }
+    }
+
+    function next(){
+      qi++;
+      if(qi >= quiz.length){
+        showScreen(main);
+      } else {
+        render();
+      }
+    }
+
+    function unlock(){
+      if(pw.value !== PASSWORD){
+        err.style.display = 'block';
+        return;
+      }
+      err.style.display = 'none';
+      showScreen(game);
+      initGame();
+      startFloatingPhotos();
+    }
+
+    function initGame(){
+      if(gameInited) return;
+      gameInited = true;
+
+      const pairsCount = PHOTOS.length;
+      const picks = PHOTOS.slice(0, pairsCount);
+      const cards = picks.concat(picks).map((src, i) => ({id: i, src}));
+
+      for(let i = cards.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = cards[i]; cards[i] = cards[j]; cards[j] = tmp;
+      }
+
+      let first = null;
+      let lockFlip = false;
+      let moves = 0;
+      let matched = 0;
+
+      movesEl.textContent = `Moves: ${moves}`;
+      pairsEl.textContent = `Pairs: ${matched}/${pairsCount}`;
+
+      board.innerHTML = '';
+      cards.forEach((c) => {
+        const card = document.createElement('div');
+        card.className = 'gameCard';
+        card.dataset.src = c.src;
+
+        const front = document.createElement('div');
+        front.className = 'gameFace gameFront';
+        front.textContent = '♥';
+
+        const back = document.createElement('div');
+        back.className = 'gameFace gameBack';
+        const img = document.createElement('img');
+        img.src = c.src;
+        img.decoding = 'async';
+        img.loading = 'eager';
+        back.appendChild(img);
+
+        card.appendChild(front);
+        card.appendChild(back);
+        board.appendChild(card);
+
+        card.addEventListener('click', () => {
+          if(lockFlip || card.classList.contains('flip') || card.classList.contains('matched')) return;
+          card.classList.add('flip');
+
+          if(!first){
+            first = card;
+            return;
+          }
+
+          moves++;
+          movesEl.textContent = `Moves: ${moves}`;
+
+          if(first.dataset.src === card.dataset.src){
+            first.classList.add('matched');
+            card.classList.add('matched');
+            first = null;
+            matched++;
+            pairsEl.textContent = `Pairs: ${matched}/${pairsCount}`;
+            if(matched === pairsCount){
+              gameMsg.textContent = "Unlocked! Starting the quiz...";
+              setTimeout(() => {
+                showScreen(quizDiv);
+                render();
+              }, 600);
+            }
+          } else {
+            lockFlip = true;
+            setTimeout(() => {
+              first.classList.remove('flip');
+              card.classList.remove('flip');
+              first = null;
+              lockFlip = false;
+            }, 700);
+          }
+        });
+      });
+    }
+
+    function startLoader(){
+      showScreen(loader);
+      let i = 0;
+      const t = setInterval(() => {
+        i += 2;
+        bar.style.width = i + '%';
+        pct.textContent = i + '%';
+        if(i >= 100){
+          clearInterval(t);
+          showScreen(plan);
+          try{ localStorage.setItem('valentine_answers_v1', JSON.stringify({answers, ts: Date.now()})); }catch(e){}
+          sendEmail();
+        }
+      }, 50);
+    }
+
+    function formatEmailBody(){
+      return quiz.map((question, i) => `${question}\n${answers[i] ?? ''}`).join("\n\n");
+    }
+
+    function ensureEmailInit(){
+      if(emailInited) return;
+      if(!window.emailjs) return;
+      try{
+        window.emailjs.init(EMAILJS_PUBLIC_KEY);
+        emailInited = true;
+      }catch(e){}
+    }
+
+    async function sendEmail(){
+      mailStatus.textContent = "Sending your answers…";
+
+      if(!window.emailjs){
+        mailStatus.textContent = "";
+        return;
+      }
+
+      try{
+        ensureEmailInit();
+        const params = {
+          to_email: TO_EMAIL,
+          message: formatEmailBody()
+        };
+        await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params);
+        mailStatus.textContent = "Sent 💌 (check inbox/spam)";
+      }catch(e){
+        mailStatus.textContent = "";
+      }
+    }
+
+    function showAnswers(){
+      showScreen(answersCard);
+      answersList.innerHTML = '';
+
+      quiz.forEach((question, i) => {
+        const div = document.createElement('div');
+        div.className = 'qa';
+        div.innerHTML = `<b>${question}</b><div>${safeText(answers[i] ?? '')}</div>`;
+        answersList.appendChild(div);
+      });
+    }
+
+    function preloadPhotos(list){
+      const clean = (list || []).filter(Boolean);
+      if(!clean.length){
+        photoPool = [];
+        photoStatus.textContent = "No photos configured.";
+        return;
+      }
+
+      let ok = 0;
+      let done = 0;
+      const missing = [];
+      photoPool = [];
+      photoStatus.textContent = "Loading photos…";
+
+      clean.forEach((src) => {
+        const test = new Image();
+        test.onload = () => {
+          ok++;
+          done++;
+          photoPool.push(src);
+          photoStatus.textContent = `${ok} photo(s) loaded.`;
+        };
+        test.onerror = () => {
+          done++;
+          missing.push(src);
+          photoStatus.textContent = `${ok} photo(s) loaded. Missing: ${done - ok}.`;
+        };
+        test.src = src;
+      });
+
+      setTimeout(() => {
+        if(ok === 0){
+          photoStatus.textContent = "Photos not found. Put images in a /photos folder next to this HTML, or change PHOTOS to full URLs.";
+        } else if(missing.length){
+          const list = missing.join(', ');
+          photoStatus.textContent = `Loaded ${ok}. Missing: ${list}`;
+        }
+      }, 1800);
+    }
+
+    function startPhotos(){
+      if(photosStarted) return;
+      photosStarted = true;
+      preloadPhotos(PHOTOS);
+      setTimeout(spawnPhoto, 900);
+      setInterval(spawnPhoto, 4200);
+    }
+
+    function startFloatingPhotos(){
+      if(floatStarted) return;
+      floatStarted = true;
+
+      const baseList = PHOTOS.filter(Boolean);
+      if(!baseList.length) return;
+      const count = 8;
+
+      for(let i=0;i<count;i++){
+        const img = document.createElement('img');
+        img.className = 'float-photo';
+        img.decoding = 'async';
+        img.loading = 'eager';
+        img.src = baseList[i % baseList.length];
+
+        const size = 90 + Math.random()*90;
+        img.style.width = size + 'px';
+
+        const x0 = (Math.random()*100).toFixed(2) + 'vw';
+        const x1 = (Math.random()*100).toFixed(2) + 'vw';
+        const r0 = (-10 + Math.random()*20).toFixed(2) + 'deg';
+        const r1 = (-12 + Math.random()*24).toFixed(2) + 'deg';
+        img.style.setProperty('--x0', x0);
+        img.style.setProperty('--x1', x1);
+        img.style.setProperty('--r0', r0);
+        img.style.setProperty('--r1', r1);
+
+        const dur = 18 + Math.random()*16;
+        const delay = -1 * Math.random()*dur;
+        img.style.animationDuration = dur + 's';
+        img.style.animationDelay = delay + 's';
+
+        document.body.appendChild(img);
+      }
+    }
+
+    function pickPhotoSrc(){
+      if(photoPool.length) return photoPool[Math.floor(Math.random()*photoPool.length)];
+      return null;
+    }
+
+    function spawnPhoto(){
+      const src = pickPhotoSrc();
+      if(!src) return;
+
+      const img = document.createElement('img');
+      img.className = 'photo';
+      img.decoding = 'async';
+      img.loading = 'eager';
+      img.src = src;
+
+      const pad = 14;
+      const x = pad + Math.random() * (window.innerWidth - 140 - pad*2);
+      const y = pad + Math.random() * (window.innerHeight - 140 - pad*2);
+      img.style.left = x + 'px';
+      img.style.top = y + 'px';
+
+      document.body.appendChild(img);
+      setTimeout(() => img.remove(), 6500);
+    }
+
+    function buildStars(n){
+      stars.innerHTML = '';
+      for(let i=0;i<n;i++){
+        const s = document.createElement('div');
+        s.className = 'star';
+        s.style.left = Math.random()*100 + '%';
+        s.style.top = Math.random()*100 + '%';
+        s.style.animationDelay = (Math.random()*3) + 's';
+        s.style.opacity = (0.25 + Math.random()*0.75).toFixed(2);
+        stars.appendChild(s);
+      }
+    }
+
+    function runTypewriter(text, el, speedMs){
+      el.textContent = '';
+      let i = 0;
+      const t = setInterval(() => {
+        el.textContent += text[i];
+        i++;
+        if(i >= text.length) clearInterval(t);
+      }, speedMs);
+    }
+
+    function showEnding(){
+      showScreen(ending);
+
+      buildStars(70);
+      const msg = "I choose you — every day, in every universe.\n\nHappy Valentine’s Day, Ishika.\n\nNow come here… I’m stealing a kiss 😘";
+      runTypewriter(msg, typeText, 18);
+    }
+
+    function showSecret(){
+      showScreen(secret);
+    }
+
+    unlockBtn.addEventListener('click', unlock);
+    pw.addEventListener('keydown', (e) => { if(e.key === 'Enter') unlock(); });
+
+    yesBtn.addEventListener('click', startLoader);
+    noBtn.addEventListener('mouseover', () => { noBtn.style.left = Math.random()*250 + 'px'; });
+
+    viewAnswersBtn.addEventListener('click', showAnswers);
+    backToPlanBtn.addEventListener('click', () => showScreen(plan));
+
+    sendAgainBtn.addEventListener('click', sendEmail);
+    finalSceneBtn.addEventListener('click', showEnding);
+    secretBtn.addEventListener('click', showSecret);
+    secretBackBtn.addEventListener('click', () => showScreen(plan));
+    restartBtn.addEventListener('click', () => window.location.reload());
+    backArrow.addEventListener('click', goBack);
+    forwardArrow.addEventListener('click', goForward);
+
+    setInterval(() => {
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.style.left = Math.random()*100 + 'vw';
+      h.textContent = '❤';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 8000);
+    }, 600);
+
+    (function runSelfTests(){
+      try{
+        const tests = [];
+        tests.push(typeof unlock === 'function');
+        tests.push(typeof startLoader === 'function');
+        tests.push(Array.isArray(quiz) && quiz.length === 12);
+        tests.push(typeof PASSWORD === 'string' && PASSWORD.length > 0);
+        tests.push(typeof TO_EMAIL === 'string' && TO_EMAIL.includes('@'));
+        console.log('[SelfTest]', tests.every(Boolean) ? 'PASS' : 'FAIL', {tests});
+      }catch(e){}
+    })();
+  </script>
+</body>
+</html>
